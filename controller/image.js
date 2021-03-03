@@ -1,3 +1,21 @@
+import Clarifai from 'clarifai';
+
+const app = new Clarifai.App({
+    apiKey: 'fcce34cb34e142319debfd1a1b241231'
+   });
+   
+const imageApiCall =(req, res) =>{   
+   app.models
+   .predict(
+   Clarifai.FACE_DETECT_MODEL,
+   req.body.input
+   ).then( data =>{
+       res.json(data);
+   })
+   .catch(err => res.status(400).json('unable to work with API'));
+   }
+
+
 const image = (req,res, db)=>{
     const { id } = req.body;
 
@@ -16,4 +34,4 @@ const image = (req,res, db)=>{
    });
 }
 
-export default image;
+export {image, imageApiCall};
